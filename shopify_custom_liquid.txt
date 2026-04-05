@@ -1170,7 +1170,7 @@ header {
         <h4>Connect</h4>
         <ul>
           <li><a href="https://instagram.com/primebrewcoffee" target="_blank">Instagram</a></li>
-          <li><a href="https://facebook.com/primebrewcoffee" target="_blank">Facebook</a></li>
+          <li><a href="https://www.facebook.com/profile.php?id=61587316247950&sk=photos_albums" target="_blank">Facebook</a></li>
           <li><a href="https://www.tiktok.com/@prime.brew.coffee?_r=1&_t=ZT-948lDhTmQjG" target="_blank">TikTok</a></li>
           <li><a href="#contact">Contact Us</a></li>
         </ul>
