@@ -1,0 +1,319 @@
+<!-- INÍCIO DO BLOCO CUSTOMIZADO PRIME BREW -->
+
+<style>
+/* CSS ENCAPSULADO PARA NÃO QUEBRAR O SEU TEMA DO SHOPIFY */
+.prime-brew-custom-landing {
+  --primary: #BE9673;
+  --secondary: #DFCBB9;
+  --bg-color: #0A0A0A;
+  --bg-color-alt: #141414;
+  --text-primary: #FFFFFF;
+  --text-secondary: #E0E0E0;
+  --font-heading: 'Oswald', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background-color: var(--bg-color);
+  line-height: 1.6;
+  text-align: left;
+}
+
+.prime-brew-custom-landing h1, 
+.prime-brew-custom-landing h2, 
+.prime-brew-custom-landing h3, 
+.prime-brew-custom-landing h4 {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-primary);
+  margin-top: 0;
+}
+
+.prime-brew-custom-landing h1 { font-size: clamp(40px, 6vw, 72px); line-height: 1.1; margin-bottom: 24px; }
+.prime-brew-custom-landing h2 { font-size: clamp(32px, 4vw, 48px); margin-bottom: 24px; }
+.prime-brew-custom-landing p { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; }
+
+/* Botões */
+.prime-brew-custom-landing .btn-primary {
+  display: inline-block;
+  background-color: var(--primary);
+  color: #fff;
+  padding: 16px 32px;
+  font-family: var(--font-heading);
+  text-decoration: none;
+  font-size: 18px;
+  border-radius: 4px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  border: 1px solid var(--primary);
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+.prime-brew-custom-landing .btn-primary:hover {
+  transform: translateY(-3px);
+  background-color: #a77c5c;
+  color: #fff;
+  box-shadow: 0 10px 20px rgba(190, 150, 115, 0.2);
+}
+
+.prime-brew-custom-landing .btn-secondary {
+  display: inline-block;
+  background-color: transparent;
+  color: var(--primary);
+  padding: 16px 32px;
+  font-family: var(--font-heading);
+  text-decoration: none;
+  font-size: 18px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  border: 2px solid var(--primary);
+  cursor: pointer;
+}
+.prime-brew-custom-landing .btn-secondary:hover {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+/* Hero Section */
+.prime-brew-hero {
+  /* Substitua a URL abaixo pelo link de uma imagem upada nos "Arquivos" do admin do Shopify */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('https://cdn.shopify.com/s/files/1/0812/4609/3592/files/IMG_4652.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  padding: 15% 5% 10% 5%;
+  position: relative;
+  min-height: 90vh;
+}
+.prime-brew-hero-content {
+  max-width: 800px;
+}
+.prime-brew-hero-content p {
+  margin-bottom: 40px;
+  font-size: 1.25rem;
+  color: var(--secondary);
+}
+.prime-brew-hero-buttons {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+/* Features */
+.prime-brew-features {
+  padding: 100px 5%;
+  background-color: var(--bg-color-alt);
+  text-align: center;
+}
+.prime-brew-features-header {
+  margin-bottom: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.prime-brew-features-header p {
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.prime-brew-grid-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+.prime-brew-feature-card {
+  background: var(--bg-color);
+  padding: 40px 24px;
+  border-radius: 8px;
+  border: 1px solid rgba(190, 150, 115, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.prime-brew-feature-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary);
+  box-shadow: 0 10px 40px rgba(190, 150, 115, 0.1);
+}
+.prime-brew-feature-icon {
+  font-size: 40px;
+  color: var(--primary);
+  margin-bottom: 24px;
+}
+.prime-brew-feature-title {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+.prime-brew-feature-card p {
+  font-size: 15px;
+  margin: 0 auto;
+}
+
+/* Produto */
+.prime-brew-product {
+  padding: 100px 5%;
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  background-color: var(--bg-color);
+}
+.prime-brew-product-img {
+  flex: 1;
+  position: relative;
+}
+.prime-brew-product-img img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.prime-brew-product-img::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  z-index: 0;
+}
+.prime-brew-product-img img {
+  position: relative;
+  z-index: 1;
+}
+.prime-brew-product-data {
+  flex: 1;
+}
+.prime-brew-product-data h2 {
+  color: var(--primary);
+}
+.prime-brew-product-data p.tag {
+  color: var(--secondary); font-family: var(--font-heading); letter-spacing: 2px;
+}
+.prime-brew-price {
+  font-size: 32px;
+  font-family: var(--font-heading);
+  color: #fff;
+  margin-bottom: 32px;
+  margin-top: 24px;
+}
+
+/* Impacto */
+.prime-brew-impact {
+  padding: 120px 5%;
+  background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://cdn.shopify.com/s/files/1/0812/4609/3592/files/impact_background.jpg'); /* Opcional: upar foto do sítio ou produção */
+  background-size: cover;
+  background-attachment: fixed;
+  text-align: center;
+}
+.prime-brew-impact h2 {
+  font-size: 56px;
+  color: var(--primary);
+}
+.prime-brew-impact p { margin: 0 auto 40px auto; }
+
+@media (max-width: 768px) {
+  .prime-brew-product { flex-direction: column; }
+  .prime-brew-hero-buttons { flex-direction: column; }
+}
+</style>
+
+<div class="prime-brew-custom-landing">
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+
+
+  <!-- HERO SECTION -->
+  <section class="prime-brew-hero">
+    <div class="prime-brew-hero-content">
+      <h1>O Ápice do Sabor,<br><span style="color: var(--primary);">Com Propósito.</span></h1>
+      <p>Não é apenas mais uma xícara. Orgânico, ultra-baixo em acidez e cultivado pelos melhores fazendeiros. Desperte e transforme o mundo a cada manhã.</p>
+      <div class="prime-brew-hero-buttons">
+        <!-- Cole AQUI O LINK do Shopify nativo da Coleção de Blend ou Carrinho -->
+        <a href="/collections/blends" class="btn-primary">GARANTIR O MEU AGORA</a>
+        <a href="#diferencial-pb" class="btn-secondary">CONHECER MAIS</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section id="diferencial-pb" class="prime-brew-features">
+    <div class="prime-brew-features-header">
+      <p>A Diferença Prime Brew</p>
+      <h2>Qualidade Que Se Sente Em Cada Gole</h2>
+    </div>
+    <div class="prime-brew-grid-features">
+      <div class="prime-brew-feature-card">
+        <div class="prime-brew-feature-icon">🌱</div>
+        <h3 class="prime-brew-feature-title">Cultivo Orgânico</h3>
+        <p>100% orgânico e cultivado à sombra utilizando agricultura sustentável.</p>
+      </div>
+      <div class="prime-brew-feature-card">
+        <div class="prime-brew-feature-icon">🔬</div>
+        <h3 class="prime-brew-feature-title">Testado em Lab</h3>
+        <p>Livre de mofos ou agrotóxicos. Garantimos saúde e pureza.</p>
+      </div>
+      <div class="prime-brew-feature-card">
+        <div class="prime-brew-feature-icon">☕</div>
+        <h3 class="prime-brew-feature-title">Baixa Acidez</h3>
+        <p>Sempre incrivelmente suave para o seu estômago e paladar.</p>
+      </div>
+      <div class="prime-brew-feature-card">
+        <div class="prime-brew-feature-icon">🤝</div>
+        <h3 class="prime-brew-feature-title">Comércio Justo</h3>
+        <p>Apoiamos as famílias pagando prêmios extras diretamente aos produtores.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUTO EM DESTAQUE -->
+  <section class="prime-brew-product">
+    <div class="prime-brew-product-img">
+      <!-- Substituir pelo link do seu mock de pacote de café -->
+      <img src="https://primebrewcoffee.com/placeholder-pacote.jpg" alt="Café Premium">
+    </div>
+    <div class="prime-brew-product-data">
+      <p class="tag">NOSSA ASSINATURA</p>
+      <h2>Pacote Especial Premium</h2>
+      <p style="margin-bottom: 24px;">Uma experiência inesquecível com notas cativantes de caramelo. A torra perfeita para uma extração com acabamento limpo.</p>
+      
+      <div class="prime-brew-price">Apoie a Causa <span>R$ 169,90</span></div>
+      
+      <!-- Link real pra página de compra -->
+      <a href="/products/french-vanilla" class="btn-primary" style="width: 100%; text-align: center;">QUERO MEU CAFÉ PREMIUM</a>
+    </div>
+  </section>
+
+  <!-- IMPACT SOCIAL -->
+  <section class="prime-brew-impact">
+    <div class="prime-brew-impact-content" style="max-width:800px; margin:0 auto;">
+      <h2>Beba Café. Transforme Vidas.</h2>
+      <p>Nós existimos por um propósito. Apoiamos diretamente causas nobres a cada venda realizada. Você bebe com propósito todos os dias.</p>
+      <a href="/pages/contact" class="btn-secondary">ENTRE EM CONTATO</a>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // Scripts básicos de âncora
+  document.querySelectorAll('.prime-brew-custom-landing a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetElement = document.querySelector(this.getAttribute('href'));
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 50,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+</script>
+
+<!-- FIM DO BLOCO CUSTOMIZADO PRIME BREW -->
