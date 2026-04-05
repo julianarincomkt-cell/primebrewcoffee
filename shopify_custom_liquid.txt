@@ -181,46 +181,44 @@ nav ul li a:hover { color: var(--primary); }
   margin: 0 auto;
 }
 
-/* SWC Product Showcase */
+/* SWC Product Showcase — CSS Grid: image left, text right on desktop */
 .product-showcase {
   padding: 120px 5%;
-  display: flex;
-  align-items: center;
-  gap: 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "image text-top"
+    "image text-bottom";
+  gap: 0 80px;
   max-width: 1400px;
   margin: 0 auto;
-}
-.product-card {
-  text-align: center;
-}
-.product-card img {
-  width: 100%;
-  margin-bottom: 24px;
-  border-radius: 4px;
+  align-items: start;
 }
 .product-image {
-  flex: 1;
+  grid-area: image;
+  align-self: center;
 }
 .product-image img {
   width: 100%;
   border-radius: 4px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.05);
 }
-/* On desktop: hide the inline mobile image, show the sidebar image */
-.product-image-mobile { display: none; }
-.product-image-desktop { display: block; flex: 1; }
-.product-details {
-  flex: 1;
+.product-details-top {
+  grid-area: text-top;
 }
-.product-details .tag {
+.product-details-bottom {
+  grid-area: text-bottom;
+}
+.product-details-top .tag {
   color: var(--secondary);
   font-size: 11px;
   letter-spacing: 3px;
   text-transform: uppercase;
   margin-bottom: 8px;
 }
-.product-details h2 { margin-bottom: 24px; }
-.product-details p { margin-bottom: 24px; }
+.product-details-top h2 { margin-bottom: 24px; }
+.product-details-top p { margin-bottom: 24px; }
 .price {
   font-size: 32px;
   font-family: var(--font-heading);
@@ -647,15 +645,20 @@ header {
     margin-bottom: 40px;
   }
 
-  /* Product Showcase — single column on mobile, image in middle (via HTML order) */
+  /* Product Showcase — single column, natural order: text → image → price */
   .product-showcase {
+    display: flex;
     flex-direction: column;
     padding: 60px 5%;
-    gap: 24px;
+    gap: 0;
   }
-  /* On mobile: show inline image, hide sidebar image */
-  .product-image-mobile { display: block; width: 100%; margin: 24px 0; }
-  .product-image-desktop { display: none; }
+  .product-image {
+    width: 100%;
+    margin: 24px 0;
+  }
+  .product-details-bottom {
+    width: 100%;
+  }
 
   /* Best sellers / product grid */
   .best-sellers-section {
@@ -927,27 +930,25 @@ header {
 
   <!-- SWC Product Showcase Style -->
   <section id="shop" class="product-showcase">
-    <!-- Desktop sidebar image (hidden on mobile) -->
-    <div class="product-image product-image-desktop">
-      <img src="https://www.primebrewco.com/cdn/shop/files/639CA6E4-419B-46B1-9766-35363074EE2F_1946x.png?v=1775111137"
-        alt="French Vanilla Coffee">
-    </div>
-    <div class="product-details">
+    <!-- 1: Text info -->
+    <div class="product-details-top">
       <p class="tag">FLAVOR COLLECTION</p>
       <h2>French Vanilla</h2>
       <p>This rich and creamy vanilla coffee is exceptionally rounded and smooth. The silky flavors blend perfectly with
         our small-batch roast to elevate your morning routine into a true ritual.</p>
       <p>Organically sourced and roasted with extreme precision to highlight the deep, natural profile without adding
         acidic bite.</p>
-      <!-- Mobile-only image: sits between description and price -->
-      <div class="product-image product-image-mobile">
-        <img src="https://www.primebrewco.com/cdn/shop/files/639CA6E4-419B-46B1-9766-35363074EE2F_1946x.png?v=1775111137"
-          alt="French Vanilla Coffee">
-      </div>
+    </div>
+    <!-- 2: Product image -->
+    <div class="product-image">
+      <img src="https://www.primebrewco.com/cdn/shop/files/639CA6E4-419B-46B1-9766-35363074EE2F_1946x.png?v=1775111137"
+        alt="French Vanilla Coffee">
+    </div>
+    <!-- 3: Price + CTA -->
+    <div class="product-details-bottom">
       <div class="price">$21.99</div>
       <a href="https://primebrewco.com/products/french-vanilla" class="btn-primary" style="width: 100%; text-align: center; display: block;">BUY NOW</a>
-      <p style="font-size: 12px; margin-top: 16px; text-align: center; font-weight: 500; letter-spacing: 1px;">PREMIUM
-        SHIPPING NATIONWIDE</p>
+      <p style="font-size: 12px; margin-top: 16px; text-align: center; font-weight: 500; letter-spacing: 1px;">PREMIUM SHIPPING NATIONWIDE</p>
     </div>
   </section>
 

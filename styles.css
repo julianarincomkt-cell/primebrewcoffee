@@ -180,46 +180,44 @@ nav ul li a:hover { color: var(--primary); }
   margin: 0 auto;
 }
 
-/* SWC Product Showcase */
+/* SWC Product Showcase — CSS Grid: image left, text right on desktop */
 .product-showcase {
   padding: 120px 5%;
-  display: flex;
-  align-items: center;
-  gap: 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "image text-top"
+    "image text-bottom";
+  gap: 0 80px;
   max-width: 1400px;
   margin: 0 auto;
-}
-.product-card {
-  text-align: center;
-}
-.product-card img {
-  width: 100%;
-  margin-bottom: 24px;
-  border-radius: 4px;
+  align-items: start;
 }
 .product-image {
-  flex: 1;
+  grid-area: image;
+  align-self: center;
 }
 .product-image img {
   width: 100%;
   border-radius: 4px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.05);
 }
-/* On desktop: hide the inline mobile image, show the sidebar image */
-.product-image-mobile { display: none; }
-.product-image-desktop { display: block; flex: 1; }
-.product-details {
-  flex: 1;
+.product-details-top {
+  grid-area: text-top;
 }
-.product-details .tag {
+.product-details-bottom {
+  grid-area: text-bottom;
+}
+.product-details-top .tag {
   color: var(--secondary);
   font-size: 11px;
   letter-spacing: 3px;
   text-transform: uppercase;
   margin-bottom: 8px;
 }
-.product-details h2 { margin-bottom: 24px; }
-.product-details p { margin-bottom: 24px; }
+.product-details-top h2 { margin-bottom: 24px; }
+.product-details-top p { margin-bottom: 24px; }
 .price {
   font-size: 32px;
   font-family: var(--font-heading);
@@ -646,15 +644,20 @@ header {
     margin-bottom: 40px;
   }
 
-  /* Product Showcase — single column on mobile, image in middle (via HTML order) */
+  /* Product Showcase — single column, natural order: text → image → price */
   .product-showcase {
+    display: flex;
     flex-direction: column;
     padding: 60px 5%;
-    gap: 24px;
+    gap: 0;
   }
-  /* On mobile: show inline image, hide sidebar image */
-  .product-image-mobile { display: block; width: 100%; margin: 24px 0; }
-  .product-image-desktop { display: none; }
+  .product-image {
+    width: 100%;
+    margin: 24px 0;
+  }
+  .product-details-bottom {
+    width: 100%;
+  }
 
   /* Best sellers / product grid */
   .best-sellers-section {
