@@ -208,6 +208,7 @@ nav ul li a:hover { color: var(--primary); }
 }
 .product-details-bottom {
   grid-area: text-bottom;
+  text-align: center;
 }
 .product-details-top .tag {
   color: var(--secondary);
