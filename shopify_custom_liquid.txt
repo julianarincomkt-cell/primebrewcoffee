@@ -644,9 +644,9 @@ header {
     margin-bottom: 40px;
   }
 
-  /* Product Showcase */
+  /* Product Showcase — text first, image below on mobile */
   .product-showcase {
-    flex-direction: column;
+    flex-direction: column-reverse;
     padding: 60px 5%;
     gap: 40px;
   }
