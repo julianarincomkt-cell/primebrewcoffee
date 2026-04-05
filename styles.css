@@ -757,7 +757,7 @@ header {
   }
 
   .footer-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr; /* Policies + Connect side by side */
   }
 
   .grid-product {
