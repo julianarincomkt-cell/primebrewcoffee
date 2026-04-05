@@ -204,8 +204,11 @@ nav ul li a:hover { color: var(--primary); }
 .product-image img {
   width: 100%;
   border-radius: 4px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.05); /* very soft shadow */
+  box-shadow: 0 10px 40px rgba(0,0,0,0.05);
 }
+/* On desktop: hide the inline mobile image, show the sidebar image */
+.product-image-mobile { display: none; }
+.product-image-desktop { display: block; flex: 1; }
 .product-details {
   flex: 1;
 }
@@ -644,12 +647,15 @@ header {
     margin-bottom: 40px;
   }
 
-  /* Product Showcase — text first, image below on mobile */
+  /* Product Showcase — single column on mobile, image in middle (via HTML order) */
   .product-showcase {
-    flex-direction: column-reverse;
+    flex-direction: column;
     padding: 60px 5%;
-    gap: 40px;
+    gap: 24px;
   }
+  /* On mobile: show inline image, hide sidebar image */
+  .product-image-mobile { display: block; width: 100%; margin: 24px 0; }
+  .product-image-desktop { display: none; }
 
   /* Best sellers / product grid */
   .best-sellers-section {
@@ -921,10 +927,6 @@ header {
 
   <!-- SWC Product Showcase Style -->
   <section id="shop" class="product-showcase">
-    <div class="product-image">
-      <img src="https://www.primebrewco.com/cdn/shop/files/639CA6E4-419B-46B1-9766-35363074EE2F_1946x.png?v=1775111137"
-        alt="French Vanilla Coffee">
-    </div>
     <div class="product-details">
       <p class="tag">FLAVOR COLLECTION</p>
       <h2>French Vanilla</h2>
@@ -932,10 +934,20 @@ header {
         our small-batch roast to elevate your morning routine into a true ritual.</p>
       <p>Organically sourced and roasted with extreme precision to highlight the deep, natural profile without adding
         acidic bite.</p>
+      <!-- Image shows here on mobile, beside text on desktop -->
+      <div class="product-image product-image-mobile">
+        <img src="https://www.primebrewco.com/cdn/shop/files/639CA6E4-419B-46B1-9766-35363074EE2F_1946x.png?v=1775111137"
+          alt="French Vanilla Coffee">
+      </div>
       <div class="price">$21.99</div>
       <a href="https://primebrewco.com/products/french-vanilla" class="btn-primary" style="width: 100%; text-align: center; display: block;">BUY NOW</a>
       <p style="font-size: 12px; margin-top: 16px; text-align: center; font-weight: 500; letter-spacing: 1px;">PREMIUM
         SHIPPING NATIONWIDE</p>
+    </div>
+    <!-- Image shows here on desktop (side by side) -->
+    <div class="product-image product-image-desktop">
+      <img src="https://www.primebrewco.com/cdn/shop/files/639CA6E4-419B-46B1-9766-35363074EE2F_1946x.png?v=1775111137"
+        alt="French Vanilla Coffee">
     </div>
   </section>
 
