@@ -561,6 +561,88 @@ header {
 }
 
 /* ==============================
+   HAMBURGER + MOBILE NAV OVERLAY
+   ============================== */
+
+/* Hide hamburger on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 300;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+/* Animate into X when open */
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Full-screen mobile nav overlay */
+.mobile-nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: var(--bg-color);
+  z-index: 250;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.mobile-nav-overlay.visible {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+.mobile-nav-overlay ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.mobile-nav-overlay ul li a {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 6vw, 40px);
+  color: var(--text-primary);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.mobile-nav-overlay ul li a:hover { color: var(--primary); }
+
+.mobile-nav-close {
+  position: absolute;
+  top: 28px;
+  right: 5%;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+/* ==============================
    RESPONSIVE — Mobile First
    ============================== */
 
@@ -592,6 +674,9 @@ header {
   }
   nav ul {
     display: none; /* hide desktop nav links on mobile */
+  }
+  .hamburger {
+    display: flex; /* show hamburger on mobile */
   }
   .logo-top {
     font-size: 22px;
