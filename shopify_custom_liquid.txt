@@ -662,26 +662,44 @@ header {
     width: 100%;
   }
 
-  /* Best sellers / product grid */
+  /* Best sellers / product grid — horizontal scroll carousel (Shopify style) */
   .best-sellers-section {
-    padding: 60px 5%;
+    padding: 60px 0 60px 0;
   }
-  .best-sellers-grid {
-    gap: 20px;
-  }
-  .grid-product {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-  .img-wrapper {
-    height: 240px;
+  .best-titles {
+    padding: 0 5%;
   }
   .category-heading {
-    font-size: 22px;
-    margin: 40px auto 20px;
+    font-size: 20px;
+    margin: 40px 5% 16px;
+    text-align: left;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .best-sellers-grid {
+    display: flex;
+    flex-wrap: nowrap;          /* no wrapping — horizontal only */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; /* smooth on iOS */
+    gap: 16px;
+    padding: 0 5% 16px 5%;     /* left/right padding so first card isn't cut off */
+    scrollbar-width: none;     /* hide scrollbar Firefox */
+  }
+  .best-sellers-grid::-webkit-scrollbar {
+    display: none;             /* hide scrollbar Chrome/Safari */
+  }
+  .grid-product {
+    flex: 0 0 72vw;            /* each card = 72% of viewport width */
+    max-width: 300px;
+    scroll-snap-align: start;  /* snap each card into place */
+  }
+  .img-wrapper {
+    height: 220px;
   }
   .best-titles h2 {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   /* Impact / Mission / Our Story sections */
