@@ -560,13 +560,196 @@ header {
   border: 1px solid rgba(0,0,0,0.1);
 }
 
-@media (max-width: 768px) {
-  .product-showcase { flex-direction: column; }
-  .hero-buttons { flex-direction: column; }
-  nav ul { display: none; }
-  .announcement-bar { font-size: 9px; line-height: 1.4; padding: 6px 10px; }
-  header { top: 40px; }
+/* ==============================
+   RESPONSIVE — Mobile First
+   ============================== */
+
+/* ---- Tablet: up to 1024px ---- */
+@media (max-width: 1024px) {
+  .product-showcase {
+    gap: 48px;
+    padding: 80px 5%;
+  }
+  .grid-features {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
+
+/* ---- Mobile: up to 768px ---- */
+@media (max-width: 768px) {
+
+  /* Announcement bar */
+  .announcement-bar {
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 7px 0;
+  }
+
+  /* Header & Nav */
+  header {
+    top: 30px;
+    padding: 16px 5%;
+  }
+  nav ul {
+    display: none; /* hide desktop nav links on mobile */
+  }
+  .logo-top {
+    font-size: 22px;
+  }
+
+  /* Hero */
+  .hero {
+    background-attachment: scroll; /* fixed parallax breaks on iOS */
+    padding: 0 6%;
+    height: 100svh; /* safe-area-aware */
+  }
+  .hero-content {
+    max-width: 100%;
+  }
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    text-align: center;
+    padding: 15px 20px;
+  }
+
+  /* Features (Values) */
+  .features {
+    padding: 70px 5%;
+  }
+  .grid-features {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .features-header {
+    margin-bottom: 40px;
+  }
+
+  /* Product Showcase */
+  .product-showcase {
+    flex-direction: column;
+    padding: 60px 5%;
+    gap: 40px;
+  }
+
+  /* Best sellers / product grid */
+  .best-sellers-section {
+    padding: 60px 5%;
+  }
+  .best-sellers-grid {
+    gap: 20px;
+  }
+  .grid-product {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+  .img-wrapper {
+    height: 240px;
+  }
+  .category-heading {
+    font-size: 22px;
+    margin: 40px auto 20px;
+  }
+  .best-titles h2 {
+    font-size: 28px;
+  }
+
+  /* Impact / Mission / Our Story sections */
+  .impact {
+    padding: 100px 6%;
+    background-attachment: scroll;
+  }
+  .impact h2 {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+  .impact p {
+    font-size: 1rem;
+    margin-bottom: 28px;
+  }
+
+  /* Newsletter */
+  .newsletter {
+    padding: 70px 5%;
+  }
+  .newsletter-content h2 {
+    font-size: 30px;
+  }
+  .newsletter-form {
+    flex-direction: column;
+    align-items: flex-start;
+    border-bottom: none;
+    gap: 12px;
+  }
+  .newsletter-form input[type="email"] {
+    font-size: 16px;
+    border-bottom: 2px solid var(--text-primary);
+    width: 100%;
+    padding: 8px 0;
+  }
+  .newsletter-form button {
+    align-self: flex-end;
+  }
+
+  /* Footer */
+  footer {
+    padding: 60px 5% 32px;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .logo-container {
+    grid-column: 1 / -1;
+    margin-right: 0;
+    justify-content: center;
+  }
+
+  /* Contact */
+  .contact-section {
+    padding: 60px 5%;
+  }
+  .form-row {
+    flex-direction: column;
+  }
+}
+
+/* ---- Small phones: up to 480px ---- */
+@media (max-width: 480px) {
+  h1 { font-size: clamp(32px, 9vw, 48px); }
+  h2 { font-size: clamp(26px, 7vw, 36px); }
+
+  .logo-top { font-size: 18px; }
+
+  .features {
+    padding: 56px 4%;
+  }
+  .feature-card {
+    padding: 36px 20px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-product {
+    max-width: 100%;
+  }
+
+  .impact {
+    padding: 80px 5%;
+  }
+
+  .btn-primary, .btn-secondary {
+    font-size: 12px;
+    padding: 14px 16px;
+    letter-spacing: 1.5px;
+  }
+}
+
 
 /* Contact Section */
 .contact-section {
