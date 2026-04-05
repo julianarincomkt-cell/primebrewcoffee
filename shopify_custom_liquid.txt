@@ -562,88 +562,6 @@ header {
 }
 
 /* ==============================
-   HAMBURGER + MOBILE NAV OVERLAY
-   ============================== */
-
-/* Hide hamburger on desktop */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  z-index: 300;
-}
-.hamburger span {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: var(--text-primary);
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-/* Animate into X when open */
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-/* Full-screen mobile nav overlay */
-.mobile-nav-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background-color: var(--bg-color);
-  z-index: 250;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  gap: 0;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.mobile-nav-overlay.visible {
-  display: flex;
-  opacity: 1;
-  transform: translateY(0);
-}
-.mobile-nav-overlay ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-.mobile-nav-overlay ul li a {
-  font-family: var(--font-heading);
-  font-size: clamp(28px, 6vw, 40px);
-  color: var(--text-primary);
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-.mobile-nav-overlay ul li a:hover { color: var(--primary); }
-
-.mobile-nav-close {
-  position: absolute;
-  top: 28px;
-  right: 5%;
-  background: none;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
-  color: var(--text-primary);
-  line-height: 1;
-}
-
-/* ==============================
    RESPONSIVE — Mobile First
    ============================== */
 
@@ -668,26 +586,37 @@ header {
     padding: 7px 0;
   }
 
-  /* Header & Nav */
+  /* Header — stack logo above nav on mobile */
   header {
     top: 30px;
-    padding: 16px 5%;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 4%;
   }
-  nav ul {
-    display: none; /* hide desktop nav links on mobile */
-  }
-  .hamburger {
-    display: flex; /* show hamburger on mobile */
+  .logo-container {
+    margin-right: 0;
   }
   .logo-top {
-    font-size: 22px;
+    font-size: 20px;
+  }
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 18px;
+  }
+  nav ul li a {
+    font-size: 10px;
+    letter-spacing: 1px;
   }
 
   /* Hero */
   .hero {
     background-attachment: scroll; /* fixed parallax breaks on iOS */
-    padding: 0 6%;
+    padding: 140px 6% 0 6%; /* push content below the taller stacked header */
     height: 100svh; /* safe-area-aware */
+    align-items: center;
   }
   .hero-content {
     max-width: 100%;
@@ -944,26 +873,8 @@ header {
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
-
-    <!-- Hamburger Button (mobile only) -->
-    <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
   </header>
 
-  <!-- Mobile Full-screen Nav Overlay -->
-  <div class="mobile-nav-overlay" id="mobile-nav">
-    <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Close menu">✕</button>
-    <ul>
-      <li><a href="#top">Home</a></li>
-      <li><a href="#blends">Blends</a></li>
-      <li><a href="#flavored">Flavored</a></li>
-      <li><a href="#sample-packs">Sample Packs</a></li>
-      <li><a href="#single-origin">Single Origin</a></li>
-      <li><a href="#tea">Tea</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </div>
 
   <!-- Hero Section (SWC Style Full Cover) -->
   <section class="hero" id="top">
@@ -1256,36 +1167,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       navbar.classList.remove('scrolled-nav');
     }
-  });
-
-  // Hamburger menu toggle
-  const hamburgerBtn = document.getElementById('hamburger-btn');
-  const mobileNav = document.getElementById('mobile-nav');
-  const mobileNavClose = document.getElementById('mobile-nav-close');
-
-  function openMobileNav() {
-    hamburgerBtn.classList.add('open');
-    hamburgerBtn.setAttribute('aria-expanded', 'true');
-    mobileNav.classList.add('visible');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeMobileNav() {
-    hamburgerBtn.classList.remove('open');
-    hamburgerBtn.setAttribute('aria-expanded', 'false');
-    mobileNav.classList.remove('visible');
-    document.body.style.overflow = '';
-  }
-
-  hamburgerBtn.addEventListener('click', () => {
-    mobileNav.classList.contains('visible') ? closeMobileNav() : openMobileNav();
-  });
-
-  mobileNavClose.addEventListener('click', closeMobileNav);
-
-  // Close menu when any mobile nav link is clicked
-  mobileNav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', closeMobileNav);
   });
 
   // Smooth scroll para links de âncora
