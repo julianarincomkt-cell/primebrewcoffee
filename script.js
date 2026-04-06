@@ -63,7 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (targetElement) {
         e.preventDefault();
 
-        const targetPosition = targetElement.offsetTop - 80;
+        // getBoundingClientRect garante posição real independente de containers aninhados
+        const rect          = targetElement.getBoundingClientRect();
+        const targetPosition = rect.top + window.pageYOffset - 80;
         const startPosition  = window.pageYOffset;
         const distance       = targetPosition - startPosition;
         const duration       = 1000;
