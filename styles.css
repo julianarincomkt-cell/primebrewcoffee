@@ -567,6 +567,57 @@ header {
    RESPONSIVE — Mobile First
    ============================== */
 
+/* ---- Hamburger Button ---- */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 300;
+  position: relative;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+.hamburger.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger.is-open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hamburger.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---- Overlay ---- */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 149;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.nav-overlay.is-visible {
+  display: block;
+  opacity: 1;
+}
+
 /* ---- Tablet: up to 1024px ---- */
 @media (max-width: 1024px) {
   .product-showcase {
@@ -581,6 +632,15 @@ header {
 /* ---- Mobile: up to 768px ---- */
 @media (max-width: 768px) {
 
+  /* Show hamburger, hide desktop nav */
+  .hamburger {
+    display: flex;
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   /* Announcement bar */
   .announcement-bar {
     font-size: 9px;
@@ -588,36 +648,76 @@ header {
     padding: 7px 0;
   }
 
-  /* Header — stack logo above nav on mobile */
+  /* Header — logo centrado, hambúrguer à direita */
   header {
     top: 30px;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
-    padding: 14px 4%;
+    padding: 16px 5%;
+    position: fixed;
+  }
+  header.scrolled-nav {
+    top: 0;
   }
   .logo-container {
     margin-right: 0;
   }
   .logo-top {
-    font-size: 20px;
+    font-size: 22px;
+  }
+
+  /* Mobile nav drawer — desliza da direita */
+  #main-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 320px;
+    height: 100dvh;
+    background-color: var(--bg-color);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+  }
+  #main-nav.is-open {
+    right: 0;
   }
   nav ul {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px 18px;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 60px 0;
+  }
+  nav ul li {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  nav ul li:first-child {
+    border-top: 1px solid rgba(0,0,0,0.06);
   }
   nav ul li a {
-    font-size: 10px;
-    letter-spacing: 1px;
+    display: block;
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 20px 32px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  nav ul li a:hover {
+    background: rgba(77,54,54,0.06);
+    color: var(--primary);
   }
 
   /* Hero */
   .hero {
-    background-attachment: scroll; /* fixed parallax breaks on iOS */
-    padding: 140px 6% 0 6%; /* push content below the taller stacked header */
-    height: 100svh; /* safe-area-aware */
+    background-attachment: scroll;
+    padding: 120px 6% 60px;
+    height: 100svh;
     align-items: center;
   }
   .hero-content {
@@ -630,8 +730,9 @@ header {
   }
   .btn-primary, .btn-secondary {
     width: 100%;
+    max-width: 320px;
     text-align: center;
-    padding: 15px 20px;
+    padding: 16px 20px;
   }
 
   /* Features (Values) */
@@ -646,7 +747,7 @@ header {
     margin-bottom: 40px;
   }
 
-  /* Product Showcase — single column, natural order: text → image → price */
+  /* Product Showcase — single column */
   .product-showcase {
     display: flex;
     flex-direction: column;
@@ -661,7 +762,7 @@ header {
     width: 100%;
   }
 
-  /* Best sellers / product grid — horizontal scroll carousel (Shopify style) */
+  /* Best sellers / produto grid — carrossel horizontal */
   .best-sellers-section {
     padding: 60px 0 60px 0;
   }
@@ -677,22 +778,22 @@ header {
   }
   .best-sellers-grid {
     display: flex;
-    flex-wrap: nowrap;          /* no wrapping — horizontal only */
+    flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch; /* smooth on iOS */
+    -webkit-overflow-scrolling: touch;
     gap: 16px;
-    padding: 0 5% 16px 5%;     /* left/right padding so first card isn't cut off */
-    scrollbar-width: none;     /* hide scrollbar Firefox */
+    padding: 0 5% 16px 5%;
+    scrollbar-width: none;
   }
   .best-sellers-grid::-webkit-scrollbar {
-    display: none;             /* hide scrollbar Chrome/Safari */
+    display: none;
   }
   .grid-product {
-    flex: 0 0 72vw;            /* each card = 72% of viewport width */
+    flex: 0 0 72vw;
     max-width: 300px;
-    scroll-snap-align: start;  /* snap each card into place */
+    scroll-snap-align: start;
   }
   .img-wrapper {
     height: 220px;
@@ -701,7 +802,7 @@ header {
     font-size: 26px;
   }
 
-  /* Impact / Mission / Our Story sections */
+  /* Impact / Mission / Our Story */
   .impact {
     padding: 100px 6%;
     background-attachment: scroll;
