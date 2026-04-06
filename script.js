@@ -6,20 +6,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Scroll: efeito glass na navbar ──────────────────────────────────────────
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled-nav');
-    } else {
-      navbar.classList.remove('scrolled-nav');
-    }
+    navbar.classList.toggle('scrolled-nav', window.scrollY > 50);
   });
 
-  // ── Hambúrguer: abre / fecha menu lateral ───────────────────────────────────
+  // ── Hambúrguer ───────────────────────────────────────────────────────────────
+  let scrollY = 0; // salva posição do scroll antes de travar
+
   function openMenu() {
+    scrollY = window.scrollY;
     mainNav.classList.add('is-open');
     hamburger.classList.add('is-open');
     overlay.classList.add('is-visible');
     hamburger.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden'; // trava scroll da página
+    // trava o scroll sem alterar o pageYOffset
+    document.body.style.position   = 'fixed';
+    document.body.style.top        = `-${scrollY}px`;
+    document.body.style.width      = '100%';
+    document.body.style.overflowY  = 'scroll';
   }
 
   function closeMenu() {
@@ -27,68 +30,59 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburger.classList.remove('is-open');
     overlay.classList.remove('is-visible');
     hamburger.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
+    // restaura o scroll exatamente onde estava
+    document.body.style.position  = '';
+    document.body.style.top       = '';
+    document.body.style.width     = '';
+    document.body.style.overflowY = '';
+    window.scrollTo(0, scrollY);
   }
 
   hamburger.addEventListener('click', () => {
-    const isOpen = mainNav.classList.contains('is-open');
-    isOpen ? closeMenu() : openMenu();
+    mainNav.classList.contains('is-open') ? closeMenu() : openMenu();
   });
 
-  // Fecha ao clicar no overlay
   overlay.addEventListener('click', closeMenu);
-
-  // Fecha ao clicar em um link do menu
-  document.querySelectorAll('#nav-links a').forEach(link => {
-    link.addEventListener('click', closeMenu);
-  });
-
-  // Fecha ao pressionar Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
-  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
 
   // ── Smooth scroll para âncoras ─────────────────────────────────────────────
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
+      if (!targetId || targetId === '#') return;
 
-      if (targetId === '#' || targetId === '') {
-        e.preventDefault();
-        return;
-      }
+      const targetEl = document.querySelector(targetId);
+      if (!targetEl) return;
 
-      const targetElement = document.querySelector(targetId);
+      e.preventDefault();
 
-      if (targetElement) {
-        e.preventDefault();
+      // Fecha menu primeiro, depois aguarda 1 frame para o DOM restabelecer
+      const isMenuOpen = mainNav.classList.contains('is-open');
+      if (isMenuOpen) closeMenu();
 
-        // getBoundingClientRect garante posição real independente de containers aninhados
-        const rect          = targetElement.getBoundingClientRect();
-        const targetPosition = rect.top + window.pageYOffset - 80;
-        const startPosition  = window.pageYOffset;
-        const distance       = targetPosition - startPosition;
-        const duration       = 1000;
-        let start            = null;
+      // Pequeno delay para o navegador restaurar o scroll antes de calcular
+      setTimeout(() => {
+        const offset     = 80;
+        const top        = targetEl.getBoundingClientRect().top + window.scrollY - offset;
+        const start      = window.scrollY;
+        const distance   = top - start;
+        const duration   = 900;
+        let startTime    = null;
 
-        window.requestAnimationFrame(function step(timestamp) {
-          if (!start) start = timestamp;
-          const progress = timestamp - start;
+        function easeInOutCubic(t) {
+          return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
 
-          const easeInOutCubic =
-            progress / duration < 0.5
-              ? 4 * Math.pow(progress / duration, 3)
-              : 1 - Math.pow(-2 * (progress / duration) + 2, 3) / 2;
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          const elapsed  = ts - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          window.scrollTo(0, start + distance * easeInOutCubic(progress));
+          if (progress < 1) requestAnimationFrame(step);
+        }
 
-          window.scrollTo(0, startPosition + distance * easeInOutCubic);
-
-          if (progress < duration) {
-            window.requestAnimationFrame(step);
-          } else {
-            window.scrollTo(0, targetPosition);
-          }
-        });
-      }
+        requestAnimationFrame(step);
+      }, isMenuOpen ? 50 : 0);
     });
   });
 });
