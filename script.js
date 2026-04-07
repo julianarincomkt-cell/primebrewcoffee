@@ -34,12 +34,32 @@ document.addEventListener('DOMContentLoaded', () => {
   overlay.addEventListener('click', closeMenu);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
 
-  // ── Menu Fechar no Clique (Mobile) ─────────────────────────────────────────
-  document.querySelectorAll('#nav-links a').forEach(anchor => {
-    anchor.addEventListener('click', () => {
+  // ── Smooth Scroll e Fechar Menu ──────────────────────────────────────────
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (!targetId || targetId === '#') return;
+      
+      const targetEl = document.querySelector(targetId);
+      if (!targetEl) return;
+
+      e.preventDefault();
+      
       if (mainNav.classList.contains('is-open')) {
         closeMenu();
       }
+      
+      // Compensa fixed header e scroll suave
+      const offset = 80;
+      const targetPosition = targetEl.getBoundingClientRect().top + window.scrollY - offset;
+      
+      // Delay minúsculo para Safari lidar bem com fechamento do menu
+      setTimeout(() => {
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }, 50);
     });
   });
 });
