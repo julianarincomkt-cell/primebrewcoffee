@@ -49,16 +49,32 @@ document.addEventListener('DOMContentLoaded', () => {
         closeMenu();
       }
       
-      // Compensa fixed header e scroll suave
-      const offset = 80;
-      const targetPosition = targetEl.getBoundingClientRect().top + window.scrollY - offset;
-      
-      // Delay minúsculo para Safari lidar bem com fechamento do menu
+      // Delay to allow mobile layout to settle after removing overflow:hidden
       setTimeout(() => {
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
+        const offset = 80;
+        const targetPosition = targetEl.getBoundingClientRect().top + window.scrollY - offset;
+        const startPosition = window.scrollY;
+        const distance = targetPosition - startPosition;
+        const duration = 600; // 600ms scroll
+        let startTimestamp = null;
+
+        function easeInOutQuad(t) {
+          return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        }
+
+        function step(timestamp) {
+          if (!startTimestamp) startTimestamp = timestamp;
+          const elapsed = timestamp - startTimestamp;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          window.scrollTo(0, startPosition + distance * easeInOutQuad(progress));
+          
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          }
+        }
+        
+        window.requestAnimationFrame(step);
       }, 50);
     });
   });
