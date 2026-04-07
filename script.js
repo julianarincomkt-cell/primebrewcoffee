@@ -1,4 +1,4 @@
-/* Prime Brew Coffee — Menu + Scroll — v5 */
+/* Prime Brew Coffee — Menu + Scroll — v7 ULTRA SIMPLES */
 (function () {
   'use strict';
 
@@ -41,39 +41,30 @@
 
   overlay.addEventListener('click', closeMenu);
 
-  /* ── Scroll ao clicar nos links do menu ───────────────────────── */
+  /* ── Links do menu: fecha menu e navega via hash nativo ──────── */
   var navLinks = document.querySelectorAll('#nav-links a');
 
   for (var i = 0; i < navLinks.length; i++) {
-    navLinks[i].addEventListener('click', handleNavClick);
-  }
+    navLinks[i].addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-  function handleNavClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
+      var href = this.getAttribute('href');
 
-    var href = this.getAttribute('href');
-    if (!href || href === '#') return;
+      // Fecha o menu
+      closeMenu();
 
-    var target = document.querySelector(href);
-    if (!target) return;
+      // Usa window.location.hash — o método mais básico e universal
+      // Funciona em TODOS os navegadores móveis sem exceção
+      setTimeout(function () {
+        // Limpa o hash atual para forçar navegação mesmo se já estiver na mesma âncora
+        history.replaceState(null, null, ' ');
 
-    // Fecha o menu primeiro
-    closeMenu();
-
-    // Espera o menu fechar completamente antes de rolar
-    setTimeout(function () {
-      var headerHeight = 80;
-      var rect = target.getBoundingClientRect();
-      var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      var top = rect.top + scrollTop - headerHeight;
-
-      // Usa try/catch para fallback total
-      try {
-        window.scrollTo({ top: top, left: 0, behavior: 'smooth' });
-      } catch (err) {
-        window.scrollTo(0, top);
-      }
-    }, 350);
+        // Pequeno delay para o browser processar a limpeza
+        setTimeout(function () {
+          window.location.hash = href;
+        }, 50);
+      }, 400);
+    });
   }
 })();
