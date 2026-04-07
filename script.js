@@ -32,11 +32,46 @@ document.addEventListener('DOMContentLoaded', () => {
   overlay.addEventListener('click', closeMenu);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
 
-  // ── Fechar Menu ao Clicar nos Links (Mobile) ─────────────────────────────
+  // ── Scroll Suave Matemático Totalmente Seguro (Para qualquer celular) ──
   document.querySelectorAll('#nav-links a').forEach(anchor => {
-    anchor.addEventListener('click', () => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault(); // Impede o bug do iOS tentar rolar o menu fixed
+      const targetId = this.getAttribute('href');
+      const targetEl = document.querySelector(targetId);
+
+      // Fecha o menu de imediato
       if (mainNav.classList.contains('is-open')) {
         closeMenu();
+      }
+
+      if (targetEl) {
+        // Aguarda 100ms para o menu começar a sumir e a tela "respirar"
+        setTimeout(() => {
+          const offset = 80; // Altura do navbar
+          // getBoundingClientRect().top pega sempre a distância exata até topo real da tela naquele pixel
+          const targetPosition = targetEl.getBoundingClientRect().top + window.pageYOffset - offset;
+          const startPosition = window.pageYOffset;
+          const distance = targetPosition - startPosition;
+          const duration = 600; // milisegundos
+          let startTimestamp = null;
+
+          function step(timestamp) {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = timestamp - startTimestamp;
+            const percent = Math.min(progress / duration, 1);
+            
+            // Efeito suave easeOutQuad (desacelera no final)
+            const easing = percent * (2 - percent);
+            
+            window.scrollTo(0, startPosition + (distance * easing));
+            
+            if (progress < duration) {
+              window.requestAnimationFrame(step);
+            }
+          }
+          
+          window.requestAnimationFrame(step);
+        }, 150); // Delay leve garante estabilidade
       }
     });
   });
