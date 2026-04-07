@@ -684,9 +684,11 @@ header {
     justify-content: center;
     transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+    pointer-events: none;
   }
   #main-nav.is-open {
     right: 0;
+    pointer-events: auto;
   }
   nav ul {
     display: flex;
