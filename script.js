@@ -1,16 +1,22 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const navbar    = document.getElementById('navbar');
-  const hamburger = document.getElementById('hamburger');
-  const mainNav   = document.getElementById('main-nav');
-  const overlay   = document.getElementById('nav-overlay');
+/* Prime Brew Coffee — Menu + Scroll — v5 */
+(function () {
+  'use strict';
 
-  // ── Scroll: efeito glass na navbar ──────────────────────────────────────────
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled-nav', window.scrollY > 50);
+  var navbar    = document.getElementById('navbar');
+  var hamburger = document.getElementById('hamburger');
+  var mainNav   = document.getElementById('main-nav');
+  var overlay   = document.getElementById('nav-overlay');
+
+  /* ── Scroll: efeito glass na navbar ───────────────────────────── */
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled-nav');
+    } else {
+      navbar.classList.remove('scrolled-nav');
+    }
   });
 
-  // ── Hambúrguer ───────────────────────────────────────────────────────────────
-  
+  /* ── Hambúrguer ───────────────────────────────────────────────── */
   function openMenu() {
     mainNav.classList.add('is-open');
     hamburger.classList.add('is-open');
@@ -25,54 +31,49 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburger.setAttribute('aria-expanded', 'false');
   }
 
-  hamburger.addEventListener('click', () => {
-    mainNav.classList.contains('is-open') ? closeMenu() : openMenu();
+  hamburger.addEventListener('click', function () {
+    if (mainNav.classList.contains('is-open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 
   overlay.addEventListener('click', closeMenu);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
 
-  // ── Scroll Suave Matemático Totalmente Seguro (Para qualquer celular) ──
-  document.querySelectorAll('#nav-links a').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      e.preventDefault(); // Impede o bug do iOS tentar rolar o menu fixed
-      const targetId = this.getAttribute('href');
-      const targetEl = document.querySelector(targetId);
+  /* ── Scroll ao clicar nos links do menu ───────────────────────── */
+  var navLinks = document.querySelectorAll('#nav-links a');
 
-      // Fecha o menu de imediato
-      if (mainNav.classList.contains('is-open')) {
-        closeMenu();
+  for (var i = 0; i < navLinks.length; i++) {
+    navLinks[i].addEventListener('click', handleNavClick);
+  }
+
+  function handleNavClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var href = this.getAttribute('href');
+    if (!href || href === '#') return;
+
+    var target = document.querySelector(href);
+    if (!target) return;
+
+    // Fecha o menu primeiro
+    closeMenu();
+
+    // Espera o menu fechar completamente antes de rolar
+    setTimeout(function () {
+      var headerHeight = 80;
+      var rect = target.getBoundingClientRect();
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      var top = rect.top + scrollTop - headerHeight;
+
+      // Usa try/catch para fallback total
+      try {
+        window.scrollTo({ top: top, left: 0, behavior: 'smooth' });
+      } catch (err) {
+        window.scrollTo(0, top);
       }
-
-      if (targetEl) {
-        // Aguarda 100ms para o menu começar a sumir e a tela "respirar"
-        setTimeout(() => {
-          const offset = 80; // Altura do navbar
-          // getBoundingClientRect().top pega sempre a distância exata até topo real da tela naquele pixel
-          const targetPosition = targetEl.getBoundingClientRect().top + window.pageYOffset - offset;
-          const startPosition = window.pageYOffset;
-          const distance = targetPosition - startPosition;
-          const duration = 600; // milisegundos
-          let startTimestamp = null;
-
-          function step(timestamp) {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = timestamp - startTimestamp;
-            const percent = Math.min(progress / duration, 1);
-            
-            // Efeito suave easeOutQuad (desacelera no final)
-            const easing = percent * (2 - percent);
-            
-            window.scrollTo(0, startPosition + (distance * easing));
-            
-            if (progress < duration) {
-              window.requestAnimationFrame(step);
-            }
-          }
-          
-          window.requestAnimationFrame(step);
-        }, 150); // Delay leve garante estabilidade
-      }
-    });
-  });
-});
+    }, 350);
+  }
+})();
