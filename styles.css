@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --primary: #4d3636;        /* Accent / Buttons (Grayish red) */
   --secondary: #8c7878;      /* Muted accent */
