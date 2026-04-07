@@ -605,16 +605,16 @@ header {
 
 /* ---- Overlay ---- */
 .nav-overlay {
-  display: none;
+  visibility: hidden;
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.45);
   z-index: 149;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 .nav-overlay.is-visible {
-  display: block;
+  visibility: visible;
   opacity: 1;
 }
 
