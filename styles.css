@@ -123,7 +123,7 @@ nav ul li a:hover { color: var(--primary); }
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0 5%;
+  padding: 110px 5% 0; /* compensa announcement bar (36px) + header (~74px) */
 }
 .hero-content {
   max-width: 800px;
@@ -512,10 +512,13 @@ footer {
   text-transform: uppercase;
   font-weight: 500;
   width: 100%;
-  position: relative;
+  position: fixed;   /* fixo no TOPO em desktop */
+  top: 0;
+  left: 0;
   z-index: 200;
   overflow: hidden;
   white-space: nowrap;
+  transition: transform 0.3s ease; /* suave ao sumir no scroll */
 }
 
 .marquee {
@@ -534,10 +537,10 @@ footer {
   100% { transform: translateX(-100%); }
 }
 
-/* Fix Header position to account for the static announcement bar */
+/* Fix Header position to account for the fixed announcement bar */
 header {
-  position: absolute;
-  top: 30px; /* space for announcement */
+  position: fixed;         /* fixo desde o início */
+  top: 36px;               /* altura da announcement bar (~36px) */
   width: 100%;
   padding: 24px 5%;
   display: flex;
@@ -554,6 +557,16 @@ header {
   backdrop-filter: blur(10px);
   padding: 16px 5%;
   border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* MOBILE: já é fixed, apenas ajuste fino */
+@media (max-width: 768px) {
+  header {
+    top: 30px;
+  }
+  header.scrolled-nav {
+    top: 0;
+  }
 }
 
 /* Payment Icons */
@@ -660,15 +673,21 @@ header {
 
   /* Header — logo centrado, hambúrguer à direita */
   header {
+    position: fixed;
     top: 30px;
+    left: 0;
+    right: 0;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 16px 5%;
-    position: fixed;
+    background-color: rgba(248, 246, 242, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
   }
   header.scrolled-nav {
     top: 0;
+    background-color: rgba(248, 246, 242, 0.97);
   }
   .logo-container {
     margin-right: 0;
