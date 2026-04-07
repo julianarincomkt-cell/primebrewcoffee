@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --primary: #4d3636;        /* Accent / Buttons (Grayish red) */
   --secondary: #8c7878;      /* Muted accent */
@@ -105,6 +109,7 @@ nav ul li a:hover { color: var(--primary); }
 /* Full Hero (SWC Structure) */
 .hero {
   height: 100vh;
+  scroll-margin-top: 80px;
   /* Overlay soft white gradient over the image so dark text is readable */
   background-image: linear-gradient(rgba(248, 246, 242, 0.6), rgba(248, 246, 242, 0.8)), url('hero_coffee.png');
   background-size: cover;
@@ -275,6 +280,7 @@ nav ul li a:hover { color: var(--primary); }
   border-bottom: 1px solid rgba(0,0,0,0.1);
   padding-bottom: 15px;
   max-width: 1200px;
+  scroll-margin-top: 80px;
 }
 .best-sellers-grid {
   display: flex;
@@ -900,6 +906,7 @@ header {
   padding: 80px 5%;
   background-color: var(--bg-color);
   text-align: center;
+  scroll-margin-top: 80px;
 }
 .contact-container {
   max-width: 600px;
