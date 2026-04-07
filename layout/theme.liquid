@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    {%- if page_title == blank -%}
+      {{ shop.name }} | Premium Coffee & Rituals
+    {%- else -%}
+      {{ page_title }} | {{ shop.name }}
+    {%- endif -%}
+  </title>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- else -%}
+    <meta name="description" content="Prime Brew Coffee was created with a simple idea: coffee is more than a drink — it's a ritual.">
+  {%- endif -%}
+
+  <!-- Open Graph / Social -->
+  <meta property="og:site_name" content="{{ shop.name }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:type" content="website">
+
+  <!-- Shopify required tag (analytics, cart, etc.) -->
+  {{ content_for_header }}
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Theme CSS -->
+  {{ 'prime-brew.css' | asset_url | stylesheet_tag }}
+</head>
+
+<body>
+
+  <!-- Conteúdo da página (renderizado pelas sections) -->
+  {{ content_for_layout }}
+
+  <!-- Theme JS -->
+  {{ 'prime-brew.js' | asset_url | script_tag }}
+
+</body>
+</html>

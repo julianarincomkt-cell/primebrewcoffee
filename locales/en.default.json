@@ -1,0 +1,14 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "Search"
+    },
+    "newsletter_form": {
+      "success": "Thank you for subscribing!",
+      "label": "Email address"
+    },
+    "contact_form": {
+      "success": "Message sent! We'll be in touch soon."
+    }
+  }
+}

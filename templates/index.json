@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "prime-brew-home": {
+      "type": "prime-brew-home",
+      "settings": {}
+    }
+  },
+  "order": ["prime-brew-home"]
+}
